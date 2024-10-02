@@ -21,7 +21,7 @@ current_dir=$(pwd)
 echo -e "${YELLOW}현재 디렉토리: ${current_dir}${NC}"
 
 # 사용자에게 작업 디렉토리 입력 받기
-read -p "위 정보를 바탕으로 작업 디렉토리를 입력하세요 (예: /home/user/swan-ecp): " work
+read -p "위 정보를 바탕으로 작업 디렉토리를 입력하세요 (예: /home/user/swan-ecp or /root/swan-ecp): " work
 
 # 작업 디렉토리 생성
 mkdir -p "$work"
