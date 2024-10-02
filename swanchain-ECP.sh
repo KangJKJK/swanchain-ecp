@@ -255,9 +255,10 @@ function install_node() {
     done
 
     # SWANCECP 담보 추가
-    read -p "${YELLOW}SWANC토큰을 보유하고있는 지갑주소를 입력하세요. 메인넷SWANC 토큰이 100개이상 필요합니다.: ${NC}" collateral_address
     echo -e "${GREEN}https://docs.swanchain.io/swan-chain-campaign/swan-chain-mainnet/free-tier-and-special-credit-programs${NC}"
     echo -e "${GREEN}https://faucet.swanchain.io${NC}"
+    echo -e "${GREEN}위 주소들에서 SWANC토큰을 얻는 방법을 알 수 있습니다.${NC}"
+    read -p "${YELLOW}SWANC토큰을 보유하고있는 지갑주소를 입력하세요. 메인넷SWANC 토큰이 100개이상 필요합니다.: ${NC}" collateral_address
     read -p "${YELLOW}담보로 추가할 SWANC 양을 입력하세요 (100개 이상이 필요합니다): ${NC}" collateral_amount
     echo "${GREEN}SWANCECP 담보를 추가 중입니다...${NC}"
     ./computing-provider collateral add --ecp --from $collateral_address $collateral_amount
