@@ -16,6 +16,11 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
+# nameserver 추가
+echo -e "${YELLOW}nameserver를 추가합니다...${NC}"
+echo "nameserver 8.8.8.8" | sudo tee -a /etc/resolv.conf
+echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf
+
 # 현재 디렉토리 확인
 current_dir=$(pwd)
 echo -e "${YELLOW}현재 디렉토리: ${current_dir}${NC}"
