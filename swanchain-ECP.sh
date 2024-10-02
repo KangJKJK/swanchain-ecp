@@ -226,6 +226,7 @@ function install_node() {
     read -p "${YELLOW}오너 월렛 주소를 입력하세요: ${NC}" owner_address
     read -p "${YELLOW}워커 월렛 주소를 입력하세요: ${NC}" worker_address
     read -p "${YELLOW}리워드 월렛 주소를 입력하세요: ${NC}" beneficiary_address
+    read -p "${YELLOW}모든 지갑 주소를 따로 저장해두세요: ${NC}"
 
     echo "${GREEN}ECP 계정을 초기화합니다...${NC}"
     ./computing-provider account create \
@@ -264,7 +265,7 @@ function install_node() {
     echo -e "${GREEN}위 주소들에서 SWANC토큰을 얻는 방법을 알 수 있습니다.${NC}"
     read -p "${YELLOW}SWANC토큰을 보유하고있는 지갑주소를 입력하세요. 메인넷SWANC 토큰이 100개이상 필요합니다.: ${NC}" collateral_address
     read -p "${YELLOW}담보로 추가할 SWANC 양을 입력하세요 (100개 이상이 필요합니다): ${NC}" collateral_amount
-    echo "${GREEN}SWANCECP 담보를 추가 중입니다...${NC}"
+    echo "${GREEN}ECP 계정에 담보를 추가 중입니다...${NC}"
     ./computing-provider collateral add --ecp --from $collateral_address $collateral_amount
 
     # SwanETHSequencer 계정에 입금
