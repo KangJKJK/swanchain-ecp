@@ -227,28 +227,27 @@ function install_node() {
 
     # UFW가 설치되어 있는지 확인하고 설치
     if ! command -v ufw &> /dev/null; then
-    echo "${YELLOW}UFW가 설치되어 있지 않습니다. 설치를 진행합니다...${NC}"
-    apt update
-    apt install -y ufw
+        echo "${YELLOW}UFW가 설치되어 있지 않습니다. 설치를 진행합니다...${NC}"
+        apt update
+        apt install -y ufw
     else
-    echo "${GREEN}UFW가 이미 설치되어 있습니다.${NC}"
+        echo "${GREEN}UFW가 이미 설치되어 있습니다.${NC}"
     fi
-
+    
     # UFW 활성화
     sudo ufw --force enable
     echo "${GREEN}방화벽 설정이 완료되었습니다.${NC}"
-
+    
     # 모든 포트 열기
     echo "${YELLOW}현재 LISTEN 상태인 포트를 모두 허용합니다...${NC}"
     ports=$(ss -tuln | grep LISTEN | awk '{print $5}' | cut -d':' -f2 | sort -u)
-
+    
     # 사용 중인 포트 열기
     for port in $ports
     do
-    sudo ufw allow "$port"
-    echo "포트 $port 허용됨."
+        sudo ufw allow "$port"
+        echo "포트 $port 허용됨."
     done
-    }
 
     # SWANCECP 담보 추가
     read -p "${YELLOW}SWANC토큰을 보유하고있는 지갑주소를 입력하세요. 메인넷SWANC 토큰이 100개이상 필요합니다.: ${NC}" collateral_address
