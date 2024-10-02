@@ -23,8 +23,15 @@ echo -e "${YELLOW}현재 디렉토리: ${current_dir}${NC}"
 # 사용자에게 작업 디렉토리 입력 받기
 read -p "위 정보를 바탕으로 작업 디렉토리를 입력하세요 (예: /home/user/swan-ecp or /root/swan-ecp): " work
 
+# 작업 디렉토리가 기존에 존재하는 경우 삭제
+if [ -d "$work" ]; then
+    echo -e "${RED}기존 디렉토리 '$work'가 존재합니다. 삭제합니다...${NC}"
+    rm -rf "$work"
+fi
+
 # 작업 디렉토리 생성
 mkdir -p "$work"
+echo -e "${GREEN}디렉토리 '$work'가 생성되었습니다.${NC}"
 
 # 생성한 작업 디렉토리로 이동
 cd "$work" || { echo "${RED}디렉토리 이동 실패!${NC}"; exit 1; }
