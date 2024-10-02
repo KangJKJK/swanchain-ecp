@@ -217,7 +217,7 @@ function install_node() {
     echo -e "${GREEN}보안을 위해 모든 지갑은 다르게 적어주세요.${NC}"
     echo -e "${GREEN}오너월렛: CP 계정의 소유자 계정입니다. 계정 관리 및 설정 변경에 사용합니다.${NC}"
     echo -e "${GREEN}워커월렛: 실제 작업 수행 및 가스 요금 지불에 사용합니다.위에서 선택했던 지갑을 사용하세요.${NC}"
-    echo -e "${GREEN}리워드월렛: CP 계정의 모든 수익이 전송되는 주소입니다. 자금을 받는 데만 사용됩니다.${NC}"
+    echo -e "${GREEN}리워드월렛: CP 계정의 모든 수익이 전송되는 주소입니다. 리워드를 받는데에만 사용됩니다.${NC}"
     echo -e "${GREEN}https://docs.swanchain.io/bulders/computing-provider/edge-computing-provider-ecp/ecp-faq#q-what-are-owneraddress-workeraddress-and-beneficiaryaddress${NC}"
     read -p "${YELLOW}오너 월렛 주소를 입력하세요: ${NC}" owner_address
     read -p "${YELLOW}워커 월렛 주소를 입력하세요: ${NC}" worker_address
