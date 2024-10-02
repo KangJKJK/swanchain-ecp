@@ -7,7 +7,10 @@ GREEN=$'\e[0;32m'
 YELLOW=$'\e[0;33m'
 NC=$'\e[0m'
 
+echo -e "${GREEN}스크립트 작성자: https://t.me/kjkresearch${NC}"
+echo -e "${YELLOW}대시보드 주소는 다음과 같습니다: https://provider.swanchain.io/rankings/ecp ${NC}"
 echo -e "${GREEN}SWAN ECP노드 설치를 시작합니다.${NC}"
+read -p "최소 권장사양은 다음과 같습니다: 1개의 GPU, 4vCPU, 32GB RAM, 300GB 저장공간 입니다. 엔터를 눌러 진행하세요"
 
 # root 사용자로 실행 중인지 확인
 if [ "$(id -u)" != "0" ]; then
@@ -352,6 +355,4 @@ function view_running_tasks() {
 # 메인 메뉴 함수 실행
 main_menu
 
-echo -e "${YELLOW}대시보드를 확인해주세요: https://provider.swanchain.io/rankings/ecp ${NC}"
 echo -e "${GREEN}모든 작업이 완료되었습니다. 컨트롤 A+D로 스크린을 나가주세요.${NC}"
-echo -e "${GREEN}스크립트 작성자: https://t.me/kjkresearch${NC}"
