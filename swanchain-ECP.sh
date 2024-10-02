@@ -209,6 +209,7 @@ function install_node() {
         --workerAddress $worker_address \
         --beneficiaryAddress $beneficiary_address \
         --task-types 1,2,4
+        --easc
         
     # SWANCECP 담보 추가
     read -p "${YELLOW}SWANC 토큰의 담보를 지급할 지갑주소를 입력하세요: ${NC}" collateral_address
