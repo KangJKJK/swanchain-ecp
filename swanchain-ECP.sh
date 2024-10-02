@@ -153,11 +153,13 @@ function install_node() {
     case $param_choice in
         1)
             echo "${GREEN}fetch-param-512.sh 스크립트를 다운로드하고 실행 중입니다...${NC}"
-            curl -fsSL https://raw.githubusercontent.com/swanchain/go-computing-provider/releases/ubi/fetch-param-512.sh | bash
+            curl -fsSL https://raw.githubusercontent.com/swanchain/go-computing-provider/releases/ubi/fetch-param-512.sh -o "$work/fetch-param-512.sh"
+            bash "$work/fetch-param-512.sh"
             ;;
         2)
             echo "${GREEN}fetch-param-32.sh 스크립트를 다운로드하고 실행 중입니다...${NC}"
-            curl -fsSL https://raw.githubusercontent.com/swanchain/go-computing-provider/releases/ubi/fetch-param-32.sh | bash
+            curl -fsSL https://raw.githubusercontent.com/swanchain/go-computing-provider/releases/ubi/fetch-param-32.sh -o "$work/fetch-param-32.sh"
+            bash "$work/fetch-param-32.sh"
             ;;
         *)
             echo "${RED}잘못된 선택입니다.${NC}"
@@ -165,7 +167,7 @@ function install_node() {
     esac
 
     echo "${GREEN}computing-provider를 다운로드 중입니다...${NC}"
-    wget https://github.com/swanchain/go-computing-provider/releases/download/v0.6.5/computing-provider
+    wget -P "$work" https://github.com/swanchain/go-computing-provider/releases/download/v0.6.5/computing-provider
 
     echo "${GREEN}computing-provider에 권한을 부여합니다...${NC}"
     chmod -R 755 computing-provider
