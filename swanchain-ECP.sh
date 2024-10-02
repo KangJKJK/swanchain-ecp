@@ -262,14 +262,13 @@ function restart_node() {
     # 설정 파일 디렉토리로 이동
     cd ~/.swan/computing || exit
 
-    echo -e "${YELLOW}config.toml 파일을 수동으로 수정하세요:${NC}"
-    echo -e "${CYAN}[UBI]${NC}"
-    echo -e "${CYAN}EnableSequencer = true             # Sequencer 서비스에 증명을 제출 (기본값: true)${NC}"
-    echo -e "${CYAN}AutoChainProof = false             # Sequencer에 충분한 자금이 없거나 서비스가 사용할 수 없을 때 Swan 체인에 증명을 자동으로 제출${NC}"
-    echo -e "${YELLOW}이 두 가지를 수정한 후, 파일에서 나가 다음 단계로 진행하세요.${NC}"
+    # EnableSequencer를 true로 설정
+    sed -i 's/^EnableSequencer = false/EnableSequencer = true/' config.toml
 
-    # 사용자가 설정 파일을 수동으로 수정할 때까지 대기
-    read -p "${YELLOW}수정이 완료되면 아무 키나 눌러주세요...${NC}"
+    # AutoChainProof를 false로 설정
+    sed -i 's/^AutoChainProof = true/AutoChainProof = false/' config.toml
+
+    echo -e "${GREEN}config.toml 파일 수정이 완료되었습니다.${NC}"
 
     # 계산 노드 명령 실행
     echo -e "${GREEN}지갑 주소를 입력하세요: ${NC}"
