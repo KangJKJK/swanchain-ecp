@@ -265,7 +265,8 @@ function install_node() {
 
     # SwanETHSequencer 계정에 입금
     echo "${GREEN}시퀸서 계정을 생성합니다.${NC}"    
-    echo "${GREEN}시퀸서 계정은 워커 주소가 작업 증명을 제출할 때 필요한 ETH를 제공합니다. 레이어3로 아주 미세한 수수료를 지불하기 위함입니다.${NC}"    
+    echo "${GREEN}시퀸서 계정은 워커 주소가 작업 증명을 제출할 때 필요한 ETH를 제공합니다. 레이어3로 아주 미세한 수수료를 지불하기 위함입니다.${NC}"  
+    echo "${GREEN}create ab account first라는 오류가 나온다면 트랜잭션에 실패하여 시퀸서 계정 생성에 실패한 것입니다.${NC}"  
     read -p "${YELLOW}입금할 EVM 지갑 주소를 입력하세요 (이 월렛이 시퀸서 월렛이 됩니다. 워커월렛과 다른 지갑을 추천합니다.): ${NC}" sequencer_address
     read -p "${YELLOW}입금할 ETH 양을 입력하세요 (0.003개 이상 추천): ${NC}" eth_amount
 
