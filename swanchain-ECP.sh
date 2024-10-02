@@ -182,8 +182,8 @@ function install_node() {
     echo "1) 새로운 지갑 주소 생성"
     echo "2) 개인 키로 지갑 가져오기"
     echo -e "${YELLOW}어느 방식을 선택하든 테스트넷 Swanchain에 ETH가 소량 필요합니다.${NC}"
-    echo -e "${YELLOW}https://bridge.swanchain.io/ 에서 약 0.02이상의 SEPOLIA ETH를 브릿징 해주세요.${NC}
-    echo -e "${YELLOW}메타마스크를 이용시 기위를 모두 0.0015로 고정하세요.${NC}
+    echo -e "${YELLOW}https://bridge.swanchain.io/ 에서 약 0.02이상의 SEPOLIA ETH를 브릿징 해주세요.${NC}"
+    echo -e "${YELLOW}메타마스크를 이용시 기위를 모두 0.0015로 고정하세요.${NC}"
     read -p "${GREEN}옵션을 입력하세요 (1 또는 2): ${NC}" wallet_choice
 
     case $wallet_choice in
