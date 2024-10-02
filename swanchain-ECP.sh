@@ -318,9 +318,9 @@ function restart_node() {
     echo -e "${GREEN}config.toml 파일 수정이 완료되었습니다.${NC}"
 
     # 계산 노드 명령 실행
-    echo -e "${GREEN}지갑 주소를 입력하세요: ${NC}"
+    echo -e "${GREEN}시퀸서 월렛을 입력하세요: ${NC}"
     read -r wallet_address
-    echo -e "${GREEN}입금할 금액을 입력하세요: ${NC}"
+    echo -e "${GREEN}시퀸서 월렛에 입금할 금액을 입력하세요(생성이 안된경우:0.003이상 생성이 이미 된경우:0.0001): ${NC}"
     read -r amount
 
     echo -e "${GREEN}sequencer add 명령을 실행 중입니다...${NC}"
