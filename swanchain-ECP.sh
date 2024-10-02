@@ -11,6 +11,7 @@ echo -e "${GREEN}스크립트 작성자: https://t.me/kjkresearch${NC}"
 echo -e "${YELLOW}대시보드 주소는 다음과 같습니다: https://provider.swanchain.io/rankings/ecp ${NC}"
 echo -e "${GREEN}SWAN ECP노드 설치를 시작합니다.${NC}"
 read -p "최소 권장사양은 다음과 같습니다: 1개의 GPU, 4vCPU, 32GB RAM, 300GB 저장공간 입니다. 엔터를 눌러 진행하세요"
+read -p "이 노드는 테스트넷이 아닙니다. 최소 0.01개의 ETH가 필요하고 100개의 메인넷 SWANC토큰이 필요합니다. 엔터를 눌러 진행하세요"
 
 # root 사용자로 실행 중인지 확인
 if [ "$(id -u)" != "0" ]; then
