@@ -208,6 +208,8 @@ function install_node() {
     esac
             
     # ECP 계정 초기화
+    echo -e "${GREEN}보안을 위해 모든 지갑은 다르게 적어주세요.${NC}"
+    echo -e "${GREEN}https://bridge.swanchain.io/ 에서 약 0.02이상의 SEPOLIA ETH를 브릿징 해주세요.${NC}"
     read -p "${YELLOW}오너 월렛 주소를 입력하세요: ${NC}" owner_address
     read -p "${YELLOW}워커 월렛 주소를 입력하세요: ${NC}" worker_address
     read -p "${YELLOW}리워드 월렛 주소를 입력하세요: ${NC}" beneficiary_address
@@ -220,14 +222,15 @@ function install_node() {
         --task-types 1,2,4
         
     # SWANCECP 담보 추가
-    read -p "${YELLOW}SWANC 토큰의 담보를 지급할 지갑주소를 입력하세요: ${NC}" collateral_address
-    read -p "${YELLOW}디스코드에서 해당지갑으로 Faucet을 받아주세요:https://discord.com/invite/swanchain${NC}"
+    read -p "${YELLOW}SWANC 토큰의 담보를 지급할 지갑주소를 입력하세요 메인넷SWANC 토큰이 100개이상 필요합니다.: ${NC}" collateral_address
+    echo -e "${GREEN}https://docs.swanchain.io/swan-chain-campaign/swan-chain-mainnet/free-tier-and-special-credit-programs${NC}"
+    echo -e "${GREEN}https://faucet.swanchain.io${NC}"
     read -p "${YELLOW}담보로 추가할 SWANC 양을 입력하세요 (100개 이상이 필요합니다): ${NC}" collateral_amount
     echo "${GREEN}SWANCECP 담보를 추가 중입니다...${NC}"
     ./computing-provider collateral add --ecp --from $collateral_address $collateral_amount
 
     # SwanETHSequencer 계정에 입금
-    read -p "${YELLOW}해당사이트에서 테스트넷으로 SepoliaETH를 브릿지 해주세요.:https://bridge.swanchain.io/${NC}"
+    read -p "${YELLOW}해당사이트에서 메인넷으로 ETH를 브릿지 해주세요.:https://bridge.swanchain.io/${NC}"
     read -p "${YELLOW}SwanETHSequencer 계정에 입금할 EVM 지갑 주소를 입력하세요: ${NC}" sequencer_address
     read -p "${YELLOW}입금할 ETH 양을 입력하세요 (0.001개 이상 추천): ${NC}" eth_amount
 
