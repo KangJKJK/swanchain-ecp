@@ -183,7 +183,7 @@ function install_node() {
     echo "${YELLOW}지갑 작업을 선택하세요:${NC}"
     echo "1) 새로운 지갑 주소 생성"
     echo "2) 개인 키로 지갑 가져오기"
-    echo -e "${YELLOW}어느 방식을 선택하든 Swanchain에 ETH가 소량 필요합니다. 브릿징을 해주세요.${NC}"
+    echo -e "${YELLOW}어느 방식을 선택하든 테스트넷 Swanchain에 ETH가 소량 필요합니다. 브릿징을 해주세요.${NC}"
     read -p "${GREEN}옵션을 입력하세요 (1 또는 2): ${NC}" wallet_choice
 
     case $wallet_choice in
@@ -215,12 +215,13 @@ function install_node() {
 
     # SWANCECP 담보 추가
     read -p "${YELLOW}SWANC 토큰의 담보를 지급할 지갑주소를 입력하세요: ${NC}" collateral_address
-    read -p "${YELLOW}디스코드에서 해당지갑으로 Faucet을 받아주세요:https://discord.com/invite/swanchain${NC}" collateral_amount
+    read -p "${YELLOW}디스코드에서 해당지갑으로 Faucet을 받아주세요:https://discord.com/invite/swanchain${NC}"
     read -p "${YELLOW}담보로 추가할 SWANC 양을 입력하세요 (100개 이상이 필요합니다): ${NC}" collateral_amount
     echo "${GREEN}SWANCECP 담보를 추가 중입니다...${NC}"
     ./computing-provider collateral add --ecp --from $collateral_address $collateral_amount
 
     # SwanETHSequencer 계정에 입금
+    read -p "${YELLOW}해당사이트에서 테스트넷으로 SepoliaETH를 브릿지 해주세요.:https://bridge.swanchain.io/${NC}"
     read -p "${YELLOW}SwanETHSequencer 계정에 입금할 EVM 지갑 주소를 입력하세요: ${NC}" sequencer_address
     read -p "${YELLOW}입금할 ETH 양을 입력하세요 (0.001개 이상 추천): ${NC}" eth_amount
 
