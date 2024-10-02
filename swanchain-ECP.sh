@@ -209,7 +209,10 @@ function install_node() {
             
     # ECP 계정 초기화
     echo -e "${GREEN}보안을 위해 모든 지갑은 다르게 적어주세요.${NC}"
-    echo -e "${GREEN}https://bridge.swanchain.io/ 에서 약 0.02이상의 SEPOLIA ETH를 브릿징 해주세요.${NC}"
+    echo -e "${GREEN}https://bridge.swanchain.io/ 에서 약 0.01이상의 메인넷ETH를 브릿징 해주세요.${NC}"
+    echo -e "${GREEN}ownerAddress: 이것은 CP 계정의 소유자 계정입니다. 소유자는 다중 주소, 근로자 주소, 수혜자 주소와 같은 계정 정보를 변경할 수 있는 권한이 있습니다.${NC}"
+    echo -e "${GREEN}workerAddress: 이것은 증명을 제출하는데 사용되는 실제 작업주소입니다. 증명을 제출할 때 가스 요금을 지불하기 위해 특정 양의 ETH로 자금을 조달해야 합니다.${NC}"
+    echo -e "${GREEN}beneficiaryAddress: CP 계정의 모든 수익이 전송되는 주소입니다. 자금을 받는 데만 사용됩니다. 보안상의 이유로 격리를 유지하기 위해 서버에 개인 키를 저장해서는 안 됩니다..${NC}"
     read -p "${YELLOW}오너 월렛 주소를 입력하세요: ${NC}" owner_address
     read -p "${YELLOW}워커 월렛 주소를 입력하세요: ${NC}" worker_address
     read -p "${YELLOW}리워드 월렛 주소를 입력하세요: ${NC}" beneficiary_address
@@ -232,7 +235,7 @@ function install_node() {
     # SwanETHSequencer 계정에 입금
     read -p "${YELLOW}해당사이트에서 메인넷으로 ETH를 브릿지 해주세요.:https://bridge.swanchain.io/${NC}"
     read -p "${YELLOW}SwanETHSequencer 계정에 입금할 EVM 지갑 주소를 입력하세요: ${NC}" sequencer_address
-    read -p "${YELLOW}입금할 ETH 양을 입력하세요 (0.001개 이상 추천): ${NC}" eth_amount
+    read -p "${YELLOW}입금할 ETH 양을 입력하세요 (0.01개 이상 추천): ${NC}" eth_amount
 
     echo "${GREEN}SwanETHSequencer 계정에 입금 중입니다...${NC}"
     ./computing-provider sequencer add --from $sequencer_address $eth_amount
