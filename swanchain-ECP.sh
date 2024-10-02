@@ -191,6 +191,7 @@ function install_node() {
     echo -e "${YELLOW}어느 방식을 선택하든 Swanchain에 메인넷 ETH가 소량 필요합니다.${NC}"
     echo -e "${YELLOW}https://bridge.swanchain.io/ 에서 약 0.01이상의 메인넷ETH를 브릿징 해주세요.${NC}"
     echo -e "${YELLOW}메타마스크를 이용시GASFEE가 높게 나옵니다. Rabby wallet을 이용해서 기위를 0.0015로 고정하세요.${NC}"
+    echo -e "${YELLOW}편의성을 위해 해당 지갑을 앞으로 워커 지갑으로 생각하세요.${NC}"
     read -p "${GREEN}옵션을 입력하세요 (1 또는 2): ${NC}" wallet_choice
 
     case $wallet_choice in
@@ -209,10 +210,9 @@ function install_node() {
             
     # ECP 계정 초기화
     echo -e "${GREEN}보안을 위해 모든 지갑은 다르게 적어주세요.${NC}"
-    echo -e "${GREEN}https://bridge.swanchain.io/ 에서 약 0.01이상의 메인넷ETH를 브릿징 해주세요.${NC}"
-    echo -e "${GREEN}ownerAddress: 이것은 CP 계정의 소유자 계정입니다. 소유자는 다중 주소, 근로자 주소, 수혜자 주소와 같은 계정 정보를 변경할 수 있는 권한이 있습니다.${NC}"
-    echo -e "${GREEN}workerAddress: 이것은 증명을 제출하는데 사용되는 실제 작업주소입니다. 증명을 제출할 때 가스 요금을 지불하기 위해 특정 양의 ETH로 자금을 조달해야 합니다.${NC}"
-    echo -e "${GREEN}beneficiaryAddress: CP 계정의 모든 수익이 전송되는 주소입니다. 자금을 받는 데만 사용됩니다. 보안상의 이유로 격리를 유지하기 위해 서버에 개인 키를 저장해서는 안 됩니다..${NC}"
+    echo -e "${GREEN}오너월렛: CP 계정의 소유자 계정입니다. 계정 관리 및 설정 변경에 사용합니다.${NC}"
+    echo -e "${GREEN}워커월렛: 실제 작업 수행 및 가스 요금 지불에 사용합니다.${NC}"
+    echo -e "${GREEN}리워드월렛: CP 계정의 모든 수익이 전송되는 주소입니다. 자금을 받는 데만 사용됩니다.${NC}"
     echo -e "${GREEN}https://docs.swanchain.io/bulders/computing-provider/edge-computing-provider-ecp/ecp-faq#q-what-are-owneraddress-workeraddress-and-beneficiaryaddress${NC}"
     read -p "${YELLOW}오너 월렛 주소를 입력하세요: ${NC}" owner_address
     read -p "${YELLOW}워커 월렛 주소를 입력하세요: ${NC}" worker_address
@@ -251,7 +251,7 @@ function install_node() {
     }
 
     # SWANCECP 담보 추가
-    read -p "${YELLOW}SWANC 토큰의 담보를 지급할 지갑주소를 입력하세요 메인넷SWANC 토큰이 100개이상 필요합니다.: ${NC}" collateral_address
+    read -p "${YELLOW}SWANC토큰을 보유하고있는 지갑주소를 입력하세요. 메인넷SWANC 토큰이 100개이상 필요합니다.: ${NC}" collateral_address
     echo -e "${GREEN}https://docs.swanchain.io/swan-chain-campaign/swan-chain-mainnet/free-tier-and-special-credit-programs${NC}"
     echo -e "${GREEN}https://faucet.swanchain.io${NC}"
     read -p "${YELLOW}담보로 추가할 SWANC 양을 입력하세요 (100개 이상이 필요합니다): ${NC}" collateral_amount
@@ -259,11 +259,12 @@ function install_node() {
     ./computing-provider collateral add --ecp --from $collateral_address $collateral_amount
 
     # SwanETHSequencer 계정에 입금
-    read -p "${YELLOW}해당사이트에서 메인넷으로 ETH를 브릿지 해주세요.:https://bridge.swanchain.io/${NC}"
-    read -p "${YELLOW}SwanETHSequencer 계정에 입금할 EVM 지갑 주소를 입력하세요: ${NC}" sequencer_address
-    read -p "${YELLOW}입금할 ETH 양을 입력하세요 (0.01개 이상 추천): ${NC}" eth_amount
+    echo "${GREEN}시퀸서 계정을 생성합니다.${NC}"    
+    echo "${GREEN}시퀸서 계정은 워커 주소가 작업 증명을 제출할 때 필요한 ETH를 제공합니다. 레이어3로 아주 미세한 수수료를 지불하기 위함입니다.${NC}"    
+    read -p "${YELLOW}입금할 EVM 지갑 주소를 입력하세요 (이 월렛이 시퀸서 월렛이 됩니다. 워커월렛과 다른 지갑을 추천합니다.): ${NC}" sequencer_address
+    read -p "${YELLOW}입금할 ETH 양을 입력하세요 (0.003개 이상 추천): ${NC}" eth_amount
 
-    echo "${GREEN}SwanETHSequencer 계정에 입금 중입니다...${NC}"
+    echo "${GREEN}시퀸서 계정에 입금 중입니다...${NC}"
     ./computing-provider sequencer add --from $sequencer_address $eth_amount
 
     # 서비스 시작
