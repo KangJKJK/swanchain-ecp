@@ -198,9 +198,6 @@ function install_node() {
         *)
             echo "${RED}잘못된 선택입니다.${NC}"
             ;;
-    esac
-}
-
     # ECP 계정 초기화
     read -p "${YELLOW}오너 월렛 주소를 입력하세요: ${NC}" owner_address
     read -p "${YELLOW}워커 월렛 주소를 입력하세요: ${NC}" worker_address
@@ -212,6 +209,7 @@ function install_node() {
         --workerAddress $worker_address \
         --beneficiaryAddress $beneficiary_address \
         --task-types 1,2,4
+        --easc  # 여기에 easc를 추가합니
 
     # SWANCECP 담보 추가
     read -p "${YELLOW}SWANC 토큰의 담보를 지급할 지갑주소를 입력하세요: ${NC}" collateral_address
