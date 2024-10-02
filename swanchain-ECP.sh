@@ -170,7 +170,7 @@ function install_node() {
     wget -P "$work" https://github.com/swanchain/go-computing-provider/releases/download/v0.6.5/computing-provider
 
     echo "${GREEN}computing-provider에 권한을 부여합니다...${NC}"
-    chmod -R 755 computing-provider
+    chmod +x "$work/computing-provider"
 
     read -p "${YELLOW}공용 IP 주소를 입력하세요: ${NC}" public_ip
     read -p "${YELLOW}사용할 포트 번호를 입력하세요 (기본값 9085): ${NC}" port
