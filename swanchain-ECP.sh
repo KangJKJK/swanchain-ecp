@@ -268,12 +268,13 @@ function restart_node() {
 
     # 설정 파일 디렉토리로 이동
     cd ~/.swan/computing || exit
+    config_file="$HOME/.swan/computing/config.toml"
 
     # EnableSequencer를 true로 설정
-    sed -i 's/^EnableSequencer = false/EnableSequencer = true/' config.toml
+    sed -i 's/^EnableSequencer = .*/EnableSequencer = true/' "$config_file"
 
     # AutoChainProof를 false로 설정
-    sed -i 's/^AutoChainProof = true/AutoChainProof = false/' config.toml
+    sed -i 's/^AutoChainProof = .*/AutoChainProof = false/' "$config_file"
 
     echo -e "${GREEN}config.toml 파일 수정이 완료되었습니다.${NC}"
 
