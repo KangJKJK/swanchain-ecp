@@ -153,13 +153,11 @@ function install_node() {
     case $param_choice in
         1)
             echo "${GREEN}fetch-param-512.sh 스크립트를 다운로드하고 실행 중입니다...${NC}"
-            curl -fsSL https://raw.githubusercontent.com/swanchain/go-computing-provider/releases/ubi/fetch-param-512.sh -o "$work/fetch-param-512.sh"
-            bash "$work/fetch-param-512.sh"
+            curl -fsSL https://raw.githubusercontent.com/swanchain/go-computing-provider/releases/ubi/fetch-param-512.sh | bash
             ;;
         2)
             echo "${GREEN}fetch-param-32.sh 스크립트를 다운로드하고 실행 중입니다...${NC}"
-            curl -fsSL https://raw.githubusercontent.com/swanchain/go-computing-provider/releases/ubi/fetch-param-32.sh -o "$work/fetch-param-32.sh"
-            bash "$work/fetch-param-32.sh"
+            curl -fsSL https://raw.githubusercontent.com/swanchain/go-computing-provider/releases/ubi/fetch-param-32.sh | bash
             ;;
         *)
             echo "${RED}잘못된 선택입니다.${NC}"
@@ -167,10 +165,10 @@ function install_node() {
     esac
 
     echo "${GREEN}computing-provider를 다운로드 중입니다...${NC}"
-    wget -P "$work" https://github.com/swanchain/go-computing-provider/releases/download/v0.6.5/computing-provider
+    wget https://github.com/swanchain/go-computing-provider/releases/download/v0.6.2/computing-provider
 
     echo "${GREEN}computing-provider에 권한을 부여합니다...${NC}"
-    chmod +x "$work/computing-provider"
+    chmod -R 755 computing-provider
 
     read -p "${YELLOW}공용 IP 주소를 입력하세요: ${NC}" public_ip
     read -p "${YELLOW}사용할 포트 번호를 입력하세요 (기본값 9085): ${NC}" port
@@ -238,31 +236,68 @@ function install_node() {
         echo "${YELLOW}GPU 설정을 건너뜁니다.${NC}"
     fi
 
-    nohup ./computing-provider run > /root/swancecp.log 2>&1 &
+    nohup ./computing-provider ubi daemon >> cp.log 2>&1 &
 }
 
 # ZK 작업 목록 확인 함수
 function view_zk_task_list() {
     echo "${GREEN}ZK 작업 목록을 확인 중입니다...${NC}"
-    docker logs -f zk-task-list
+    ./computing-provider ubi list --show-failed
 }
 
 # 노드 로그 조회 함수
 function query_node_logs() {
     echo "${GREEN}노드 로그를 조회 중입니다...${NC}"
-    docker logs -f node
+    cd ~/.swan/computing || exit
+    tail -f ubi-ecp.log
 }
 
 # 노드 재시작 함수
 function restart_node() {
-    echo "${GREEN}노드를 재시작 중입니다...${NC}"
-    docker restart node
+    echo -e "${GREEN}config.toml 파일을 수정 중입니다...${NC}"
+
+    # 설정 파일 디렉토리로 이동
+    cd ~/.swan/computing || exit
+
+    echo -e "${YELLOW}config.toml 파일을 수동으로 수정하세요:${NC}"
+    echo -e "${CYAN}[UBI]${NC}"
+    echo -e "${CYAN}EnableSequencer = true             # Sequencer 서비스에 증명을 제출 (기본값: true)${NC}"
+    echo -e "${CYAN}AutoChainProof = false             # Sequencer에 충분한 자금이 없거나 서비스가 사용할 수 없을 때 Swan 체인에 증명을 자동으로 제출${NC}"
+    echo -e "${YELLOW}이 두 가지를 수정한 후, 파일에서 나가 다음 단계로 진행하세요.${NC}"
+
+    # 사용자가 설정 파일을 수동으로 수정할 때까지 대기
+    read -p "${YELLOW}수정이 완료되면 아무 키나 눌러주세요...${NC}"
+
+    # 계산 노드 명령 실행
+    echo -e "${GREEN}지갑 주소를 입력하세요: ${NC}"
+    read -r wallet_address
+    echo -e "${GREEN}입금할 금액을 입력하세요: ${NC}"
+    read -r amount
+
+    echo -e "${GREEN}sequencer add 명령을 실행 중입니다...${NC}"
+    ./computing-provider sequencer add --from "$wallet_address" "$amount"
+
+    # 환경 변수를 설정하고 서비스를 다시 시작
+    export FIL_PROOFS_PARAMETER_CACHE=$PARENT_PATH
+
+    read -p "${YELLOW}시스템에 GPU가 있습니까? (y/n): ${NC}" has_gpu
+    if [ "$has_gpu" == "y" ]; then
+        read -p "${YELLOW}GPU 모델과 코어 수를 입력하세요 (예: GeForce RTX 4090:16384): ${NC}" gpu_info
+        export RUST_GPU_TOOLS_CUSTOM_GPU="$gpu_info"
+    else
+        echo -e "${YELLOW}GPU가 감지되지 않았습니다. GPU 설정을 건너뜁니다.${NC}"
+    fi
+
+    echo -e "${GREEN}노드를 다시 시작합니다...${NC}"
+    nohup ./computing-provider ubi daemon >> cp.log 2>&1 &
+
+    echo -e "${BLUE}노드가 재시작되었습니다.${NC}"
 }
 
 # 현재 실행 중인 작업 목록 확인 함수
 function view_running_tasks() {
     echo "${GREEN}현재 실행 중인 작업 목록을 확인 중입니다...${NC}"
-    docker ps
+    ./computing-provider task list -v
 }
 
 # 메인 메뉴 함수 실행
